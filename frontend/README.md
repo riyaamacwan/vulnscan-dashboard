@@ -1,16 +1,109 @@
-# React + Vite
+# Vulnerability Scanner & Security Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack vulnerability scanner and security dashboard built with Python, Flask, React, Nmap, and SQLite.
 
-Currently, two official plugins are available:
+The application performs authorized network and service discovery, applies a rule-based vulnerability engine, stores findings in SQLite, and presents results through an interactive React dashboard.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- Nmap-based port and service discovery
+- TLS certificate and protocol checks
+- Rule-based vulnerability detection
+- CVE reference support
+- Severity-based dashboard
+- Individual scan reports
+- Historical scan storage
+- CSV and PDF report export
+- JWT authentication
+- Encrypted scan-result storage
+- Docker Compose setup
+- GitHub Actions CI
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+| Layer | Technology |
+|---|---|
+| Backend | Python, Flask, SQLAlchemy |
+| Database | SQLite |
+| Scanner | Nmap, Python probes |
+| Frontend | React, Vite, Axios, React Router |
+| Reports | ReportLab, CSV |
+| Security | JWT, password hashing, encrypted storage |
+| DevOps | Docker Compose, GitHub Actions |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Architecture
+
+```text
+React Dashboard
+      ↓
+Flask REST API
+      ↓
+Scan Service
+      ↓
+Nmap Scanner + TLS Probe + Rules Engine
+      ↓
+SQLite Database
+      ↓
+Findings, Reports, Dashboard
+```
+
+## Legal Disclaimer
+
+This project is intended for educational use and security testing in controlled environments.
+
+Only scan systems that you own or for which you have explicit written authorization. Unauthorized scanning may be illegal.
+
+## Local Setup
+
+### Backend
+
+```bash
+cd backend
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python wsgi.py
+```
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+### Docker
+
+```bash
+docker compose up --build
+```
+
+## API Overview
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/api/health` | Health check |
+| POST | `/api/scans` | Start a scan |
+| GET | `/api/scans/<id>` | Get scan details |
+| GET | `/api/findings` | List findings |
+| GET | `/api/reports/<id>/csv` | Download CSV report |
+| GET | `/api/reports/<id>/pdf` | Download PDF report |
+| POST | `/api/auth/register` | Register user |
+| POST | `/api/auth/login` | Login user |
+
+## Screenshots
+
+![Dashboard](docs/screenshots/dashboard.png)
+
+![Scan Details](docs/screenshots/scan-details.png)
+
+## Roadmap
+
+- Historical scan comparison
+- CVE enrichment using NVD data
+- CVSS scoring
+- Web application security probes
+- Role-based access control
+- Scheduled scans
+- Email alerts
