@@ -160,4 +160,19 @@ export default function ScanDetails() {
       )}
     </div>
   );
+  <div className="flex gap-3 mb-6">
+  <a
+    href={`http://127.0.0.1:5000/api/reports/${scan.id}/csv`}
+    className="bg-blue-600 text-white px-4 py-2 rounded"
+  >
+    Download CSV
+  </a>
+
+  <a
+    href={`http://127.0.0.1:5000/api/reports/${scan.id}/pdf`}
+    className="bg-gray-800 text-white px-4 py-2 rounded"
+  >
+    Download PDF
+  </a>
+</div>
 }
