@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from app.extensions import db
 from app.models import Target, Scan
 from app.services.scan_service import start_scan
-
+from app.utils.security import jwt_required
 scans_bp = Blueprint("scans", __name__)
 
 BLOCKED_HOSTS = {

@@ -1,14 +1,16 @@
 import os
 from flask import Flask
 from dotenv import load_dotenv
-
+from app.routes.auth import auth_bp
 from app.config import Config
 from app.extensions import db, cors
 from app.models import Target, Scan, Finding
 from app.routes.scans import scans_bp
 from app.routes.findings import findings_bp
+from app.routes.reports import reports_bp
 
 load_dotenv()
+
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -19,6 +21,8 @@ def create_app(config_class=Config):
 
     app.register_blueprint(scans_bp, url_prefix="/api")
     app.register_blueprint(findings_bp, url_prefix="/api")
+    app.register_blueprint(reports_bp, url_prefix="/api")
+    app.register_blueprint(auth_bp, url_prefix="/api/auth")
 
     with app.app_context():
         db.create_all()
