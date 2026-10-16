@@ -6,10 +6,10 @@ export default function NewScan() {
   const [host, setHost] = useState("");
   const [ports, setPorts] = useState("1-1000");
   const [authorized, setAuthorized] = useState(false);
-  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const startScan = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
@@ -20,13 +20,13 @@ export default function NewScan() {
       });
 
       navigate(`/scans/${response.data.scan_id}`);
-    } catch (error) {
-      setMessage(error.response?.data?.error || "Scan failed to start");
+    } catch (err) {
+      setError(err.response?.data?.error || "Failed to start scan");
     }
   };
 
   return (
-    <form onSubmit={startScan} className="p-6 max-w-lg space-y-4">
+    <form onSubmit={handleSubmit} className="p-6 max-w-lg mx-auto space-y-4">
       <h1 className="text-2xl font-bold">New Vulnerability Scan</h1>
 
       <input
@@ -49,6 +49,7 @@ export default function NewScan() {
           type="checkbox"
           checked={authorized}
           onChange={(event) => setAuthorized(event.target.checked)}
+          required
         />
         I own this system or have written authorization to scan it.
       </label>
@@ -57,7 +58,7 @@ export default function NewScan() {
         Start Scan
       </button>
 
-      {message && <p className="text-red-600">{message}</p>}
+      {error && <p className="text-red-600">{error}</p>}
     </form>
   );
 }

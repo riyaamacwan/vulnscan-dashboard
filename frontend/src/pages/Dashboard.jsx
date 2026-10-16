@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import client from "../api/client";
 import SeverityCard from "../components/SeverityCard";
-
+import { Link } from "react-router-dom";
 export default function Dashboard() {
   const [findings, setFindings] = useState([]);
 
@@ -29,4 +29,18 @@ export default function Dashboard() {
       </div>
     </div>
   );
+  {findings.map((finding) => (
+  <li key={finding.id} className="border-b py-2 flex justify-between">
+    <span>
+      <strong>{finding.title}</strong> — {finding.severity}
+    </span>
+
+    <Link
+      to={`/scans/${finding.scan_id}`}
+      className="text-blue-600 underline"
+    >
+      View scan
+    </Link>
+  </li>
+))}
 }
